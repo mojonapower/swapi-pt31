@@ -2,6 +2,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
 			planetas:[],
+			personajes:[],
 			demo: [
 				{
 					title: "FIRST",
@@ -13,9 +14,24 @@ const getState = ({ getStore, getActions, setStore }) => {
 					background: "white",
 					initial: "white"
 				}
-			]
+			],
+			titulo:"Mi super blog de Starwars"
 		},
 		actions: {
+			getPersonajes: ()=>{
+				fetch("https://www.swapi.tech/api/people")
+				.then(response => response.json())
+				.then(data => setStore({personajes: data.results}))
+			},
+
+			saludar:()=>{
+				alert("hola!")
+			},
+			cambiarTitulo:()=>{
+				setStore({titulo: "Mi super DUPER blog de Starwars"})
+				const ejecutar = getActions();
+				ejecutar.saludar();
+			},
 
 			getPlanetas:()=>{
 				fetch("https://www.swapi.tech/api/planets")
@@ -47,7 +63,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 				//reset the global store
 				setStore({ demo: demo });
-			}
+			},
+			
+
+
 		}
 	};
 };
